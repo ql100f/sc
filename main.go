@@ -7,6 +7,7 @@ import (
 	"os"
 	_ "sc/demo"
 	"sc/internal"
+	_ "sc/kafka"
 	_ "sc/scripts"
 )
 
