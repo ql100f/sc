@@ -35,7 +35,7 @@ func (p *producer) Run(ctx context.Context) error {
 		if err != nil {
 			return err
 		}
-		time.Sleep(time.Second * 1)
+		time.Sleep(time.Millisecond * 200)
 	}
 	return nil
 }

@@ -7,7 +7,7 @@ import (
 )
 
 const (
-	topicName = "test-topic"
+	topicName = "topic-order"
 )
 
 type KafkaConfig struct {

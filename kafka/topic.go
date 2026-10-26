@@ -18,13 +18,14 @@ func (t *topic) Name() string {
 	return "kafka-topic"
 }
 func (t *topic) Run(ctx context.Context) error {
+	topicName := "topic-order"
 	patitionNum := int32(3)
 	replicationNum := int16(1)
-	err := createTopic(nil, "topic-order", patitionNum, replicationNum)
+	err := createTopic(nil, topicName, patitionNum, replicationNum)
 	if err != nil {
 		return fmt.Errorf("create topic err : %w", err)
 	}
-	fmt.Printf("create topic success, topic:[%s],patitions:[%d],replcations:[%d] ", topicName, patitionNum, replicationNum)
+	fmt.Printf("create topic success, topic:[%s],patitions:[%d],replcations:[%d] \n", topicName, patitionNum, replicationNum)
 	return nil
 }
 
