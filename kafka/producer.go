@@ -43,6 +43,7 @@ func (p *producer) Run(ctx context.Context) error {
 func sendMsg(p sarama.SyncProducer, topic string, data string) error {
 	msg := &sarama.ProducerMessage{
 		Topic: topic,
+		// Key:   sarama.StringEncoder("orderid_152345314"), // 可以指定key，指定Key之后会按 hash(key)%分区总数 路由到具体的分区
 		Value: sarama.StringEncoder(data),
 	}
 	part, offset, err := p.SendMessage(msg)

@@ -2,8 +2,9 @@ module sc
 
 go 1.27.1
 
+require github.com/IBM/sarama v1.61.1
+
 require (
-	github.com/IBM/sarama v1.61.1 // indirect
 	github.com/davecgh/go-spew v1.1.1 // indirect
 	github.com/eapache/go-resiliency v1.7.0 // indirect
 	github.com/hashicorp/go-uuid v1.0.3 // indirect

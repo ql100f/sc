@@ -20,6 +20,15 @@ var GlobalKafkaConfig = &KafkaConfig{
 	Version:    sarama.V4_3_1_0,
 }
 
+func NewClusterAdmin(brokers []string) (sarama.ClusterAdmin, error) {
+	cfg := sarama.NewConfig()
+	cfg.Version = GlobalKafkaConfig.Version
+	if len(brokers) <= 0 {
+		brokers = GlobalKafkaConfig.BrokerAddr
+	}
+	return sarama.NewClusterAdmin(brokers, cfg)
+}
+
 func NewSyncProducer() (sarama.SyncProducer, error) {
 	cfg := sarama.NewConfig()
 	cfg.Version = GlobalKafkaConfig.Version
