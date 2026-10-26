@@ -2,22 +2,22 @@ package demo
 
 import (
 	"context"
-	"fmt"
+	"log"
 	"sc/internal"
 )
 
 func init() {
-	internal.Register(&DemoTask{})
+	internal.Register(&demoTask{})
 }
 
-type DemoTask struct {
+type demoTask struct {
 }
 
-func (d *DemoTask) Name() string {
+func (d *demoTask) Name() string {
 	return "demo"
 }
 
-func (d *DemoTask) Run(ctx context.Context) error {
-	fmt.Println("demo")
+func (d *demoTask) Run(ctx context.Context) error {
+	log.Println("demo")
 	return nil
 }
