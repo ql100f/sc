@@ -96,6 +96,7 @@ func StartConsumerGroup(ctx context.Context, topicName string, groupID string) {
 	}()
 
 	handler := NewConsumerGroupHandler(groupID)
+	// 下面这个for循环是必须的，因为sarama的Consume方法会在rebalance时返回，需要重新调用Consume方法，如果不加for，那么rebalance后就无法继续消费消息了
 	for {
 		err := consumerGroup.Consume(ctx, []string{topicName}, handler)
 		if ctx.Err() != nil {

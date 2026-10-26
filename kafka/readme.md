@@ -24,6 +24,10 @@
 
 ### 相关命令
 # 查看本地客户端工具版本（本地bin包版本，不一定等于远端broker）
+docker 执行目录
+docker exec -it id bash
+cd /opt/kafka/bin
+
 kafka-topics.sh --version
 # 连接集群，查看broker支持的API版本（用来做客户端版本兼容判断）
 kafka-broker-api-versions.sh --bootstrap-server 127.0.0.1:9092
@@ -32,3 +36,6 @@ kafka-topics.sh --create --bootstrap-server 127.0.0.1:9092 --topic test-topic --
 kafka-topics.sh --alter --bootstrap-server 127.0.0.1:9092 --topic test-topic --partitions 8
 kafka-topics.sh --describe --bootstrap-server 127.0.0.1:9092 --topic test-topic
 kafka-topics.sh --delete --bootstrap-server 127.0.0.1:9092 --topic test-topic
+
+
+kafka-topics.sh --alter --bootstrap-server 127.0.0.1:9092 --topic topic-order --partitions 4
