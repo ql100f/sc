@@ -3,6 +3,8 @@ package kafka
 import (
 	"context"
 	"fmt"
+	"log"
+	"net/http"
 	"os"
 	"os/signal"
 	"sc/internal"
@@ -32,6 +34,26 @@ func (c *consumer) Run(ctx context.Context) error {
 		StartConsumerGroup(ctx, topicName, group)
 	}()
 
+	//启动一个http服务来监听进程状态
+	go func() {
+		mux := http.NewServeMux()
+		mux.HandleFunc("/monitor", monitor)
+		server := &http.Server{
+			Addr:    ":8080",
+			Handler: mux,
+		}
+
+		go func() {
+			<-ctx.Done()
+			_ = server.Shutdown(context.Background())
+		}()
+		log.Println("http monitor start at :8088")
+		if err := server.ListenAndServe(); err != http.ErrServerClosed {
+			log.Printf("http server err: %v\n", err)
+		}
+
+	}()
+
 	// 信号监听，优雅关闭
 	sigChan := make(chan os.Signal, 1)
 	signal.Notify(sigChan, syscall.SIGINT, syscall.SIGTERM)
@@ -46,6 +68,11 @@ func (c *consumer) Run(ctx context.Context) error {
 	fmt.Println("\n收到退出信号")
 	<-done
 	return nil
+}
+
+func monitor(w http.ResponseWriter, r *http.Request) {
+	w.WriteHeader(http.StatusOK)
+	w.Write([]byte("ok"))
 }
 
 type ConsumerGroupHandler struct {
