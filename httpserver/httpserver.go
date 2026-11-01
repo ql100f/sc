@@ -21,10 +21,24 @@ func (h *httpServer) Run(ctx context.Context) error {
 	mux := http.NewServeMux()
 	limit := LimitMiddleware(3) // 最大并发3
 
-	mux.HandleFunc("/", logger(home))
+	mux.HandleFunc("/", logger(home))  // logger(home) 为http.HandlerFunc 也是 func(ResponseWriter, *Request)，内部还是做了HandlerFunc(loger(home))这个装箱接口的操作
+	mux.HandleFunc("/home", home)      // home 为 func(ResponseWriter, *Request) 函数
+	mux.Handle("/home2", logger(home)) // logger(home) 为http.HandlerFunc接口 也是 func(ResponseWriter, *Request)
+
 	mux.Handle("/hello", limit(http.HandlerFunc(hello)))
 	http.ListenAndServe(":8080", mux)
 	return nil
+}
+
+func home(w http.ResponseWriter, r *http.Request) {
+	// fmt.Fprint(w, "首页")
+	w.WriteHeader(http.StatusOK)
+	w.Write([]byte("首页"))
+}
+
+func hello(w http.ResponseWriter, r *http.Request) {
+	w.WriteHeader(http.StatusOK)
+	w.Write([]byte("欢迎"))
 }
 
 func logger(h http.HandlerFunc) http.HandlerFunc {
@@ -53,15 +67,4 @@ func LimitMiddleware(maxConcurrency int) func(http.Handler) http.Handler {
 			}
 		})
 	}
-}
-
-func home(w http.ResponseWriter, r *http.Request) {
-	// fmt.Fprint(w, "首页")
-	w.WriteHeader(http.StatusOK)
-	w.Write([]byte("首页"))
-}
-
-func hello(w http.ResponseWriter, r *http.Request) {
-	w.WriteHeader(http.StatusOK)
-	w.Write([]byte("欢迎"))
 }
