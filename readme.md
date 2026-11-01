@@ -10,8 +10,17 @@ main.go中一定要导入脚本目录
 
 
 ### 运行示例
-go run main.go -s demo  
-go run main.go -s ringstat  
+
+查看所有已注册脚本（按名称排序）：
+	go run main.go -list
+
+运行指定脚本：
+	go run main.go -s demo
+	go run main.go -s ring
+
+### VS Code 调试
+.vscode/launch.json 已内置配置，按 F5 选「运行 sc 脚本（输入名称）」，
+输入脚本名即可带断点启动；也可以选现成的 channel / httpserver / kafka 等配置。
 
 ### 其它
 初始化项目 go mod init sc  

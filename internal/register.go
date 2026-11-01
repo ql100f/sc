@@ -3,6 +3,7 @@ package internal
 import (
 	"context"
 	"fmt"
+	"sort"
 	"sync"
 )
 
@@ -34,6 +35,7 @@ func List() []string {
 	for k := range funcMap {
 		names = append(names, k)
 	}
+	sort.Strings(names) // map 遍历顺序随机，排序后输出才稳定
 	return names
 }
 

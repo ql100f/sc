@@ -13,11 +13,24 @@ import (
 	_ "sc/scripts"
 )
 
-var sname string
+var (
+	sname string
+	list  bool
+)
 
 func main() {
-	flag.StringVar(&sname, "s", "demo", "请输入-d name 这样的格式")
+	flag.StringVar(&sname, "s", "demo", "请输入-s name 这样的格式")
+	flag.BoolVar(&list, "list", false, "列出所有已注册脚本后退出")
 	flag.Parse()
+
+	if list {
+		names := internal.List()
+		fmt.Printf("共 %d 个脚本，用法：go run main.go -s <name>\n\n", len(names))
+		for _, name := range names {
+			fmt.Printf("  -s %s\n", name)
+		}
+		return
+	}
 
 	if sname == "" {
 		os.Exit(-1)
