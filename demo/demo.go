@@ -187,7 +187,9 @@ type historyWindow struct {
 
 func (h *historyWindow) SetStrategy(s TrimStrategy) { h.strategy = s }
 
-func (h *historyWindow) Build() []string { return h.strategy.Trim(h.history, h.keep) }
+func (h *historyWindow) Build() []string {
+	return h.strategy.Trim(h.history, h.keep)
+}
 
 func strategyDemo() {
 	h := &historyWindow{
