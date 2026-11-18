@@ -7,6 +7,7 @@ import (
 	"os"
 	_ "sc/channel"
 	_ "sc/demo"
+	_ "sc/file"
 	_ "sc/httpserver"
 	"sc/internal"
 	_ "sc/kafka"

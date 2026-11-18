@@ -7,7 +7,10 @@
       "request": "launch",
       "mode": "auto",
       "program": "${workspaceFolder}",
-      "args": ["-s", "${input:scriptName}"],
+      "args": [
+        "-s",
+        "${input:scriptName}"
+      ],
       "console": "integratedTerminal",
       "cwd": "${workspaceFolder}"
     },
@@ -17,7 +20,10 @@
       "request": "launch",
       "mode": "auto",
       "program": "${workspaceFolder}",
-      "args": ["-s", "demo"],
+      "args": [
+        "-s",
+        "demo"
+      ],
       "console": "integratedTerminal",
       "cwd": "${workspaceFolder}"
     },
@@ -27,7 +33,10 @@
       "request": "launch",
       "mode": "auto",
       "program": "${workspaceFolder}",
-      "args": ["-s", "channel"],
+      "args": [
+        "-s",
+        "channel"
+      ],
       "console": "integratedTerminal",
       "cwd": "${workspaceFolder}"
     },
@@ -37,7 +46,10 @@
       "request": "launch",
       "mode": "auto",
       "program": "${workspaceFolder}",
-      "args": ["-s", "goescape"],
+      "args": [
+        "-s",
+        "goescape"
+      ],
       "console": "integratedTerminal",
       "cwd": "${workspaceFolder}"
     },
@@ -47,7 +59,10 @@
       "request": "launch",
       "mode": "auto",
       "program": "${workspaceFolder}",
-      "args": ["-s", "httpserver"],
+      "args": [
+        "-s",
+        "httpserver"
+      ],
       "console": "integratedTerminal",
       "cwd": "${workspaceFolder}"
     },
@@ -57,7 +72,11 @@
       "request": "launch",
       "mode": "auto",
       "program": "${workspaceFolder}",
-      "args": ["-s", "kafka-consumer", "group1"],
+      "args": [
+        "-s",
+        "kafka-consumer",
+        "group1"
+      ],
       "console": "integratedTerminal",
       "cwd": "${workspaceFolder}"
     },
@@ -67,7 +86,24 @@
       "request": "launch",
       "mode": "auto",
       "program": "${workspaceFolder}",
-      "args": ["-s", "kafka-producer", "node1"],
+      "args": [
+        "-s",
+        "kafka-producer",
+        "node1"
+      ],
+      "console": "integratedTerminal",
+      "cwd": "${workspaceFolder}"
+    },
+    {
+      "name": "file-reader",
+      "type": "go",
+      "request": "launch",
+      "mode": "auto",
+      "program": "${workspaceFolder}",
+      "args": [
+        "-s",
+        "file-reader"
+      ],
       "console": "integratedTerminal",
       "cwd": "${workspaceFolder}"
     }

@@ -35,13 +35,32 @@ func printBit() {
 	log.Printf("拷贝版本 bitsCopy: %08b", bstr)
 }
 
+func testTimeTicker(ctx context.Context) {
+	ticker := time.NewTicker(1 * time.Second)
+	defer ticker.Stop()
+	for {
+		start := time.Now()
+		time.Sleep(900 * time.Millisecond)
+		select {
+		case <-ctx.Done():
+			return
+		case <-ticker.C:
+			fmt.Println("---：", time.Since(start))
+		default:
+			fmt.Println("ddddddddddddd")
+		}
+	}
+}
+
 func (d *demoTask) Run(ctx context.Context) error {
 	log.Println("demo")
 	// 装饰器模式，http中间件都是此用法
 	// decorator()
 
+	testTimeTicker(ctx)
+
 	// 策略模式：同一套流程，运行时替换算法
-	strategyDemo()
+	//strategyDemo()
 
 	// 监听执行完毕及中断操作
 	// listenWork(ctx)

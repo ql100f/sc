@@ -32,10 +32,10 @@ func (h *httpServer2) Run(ctx context.Context) error {
 	server := &http.Server{
 		Addr:              APIHTTPAddr,
 		Handler:           router,
-		ReadHeaderTimeout: 5 * time.Second,
-		ReadTimeout:       10 * time.Second,
-		WriteTimeout:      10 * time.Second,
-		IdleTimeout:       90 * time.Second,
+		ReadHeaderTimeout: 5 * time.Second, // 读取请求头超时控制，每次重新计时不影响第二次请求
+		// ReadTimeout:       10 * time.Second, //比较鸡肋，限制一次建立TCP多次复用总时长，超过10s就关闭tcp 再重新建立tcp连接了
+		WriteTimeout: 10 * time.Second, // 写超时控制，每次重新计时不影响第二次请求
+		IdleTimeout:  90 * time.Second, // 空闲多久后关闭tcp连接
 	}
 	errCh := make(chan error, 1)
 	go func() {
