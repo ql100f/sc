@@ -423,3 +423,44 @@ func readTxtStream(path string, sink ChunkSink) error {
 	}
 	return sc.Err()
 }
+
+// 不是逐行处理，而是按段聚合成段再处理，适合流式读取大文件按段输出的场景，比如rag切片
+func readTxtStreamRecursive(path string, sink ChunkSink) error {
+	f, err := os.Open(path)
+	if err != nil {
+		return err
+	}
+	defer f.Close()
+
+	sc := bufio.NewScanner(f)
+	// 加大行缓冲，避免超长行触发 Scanner 错误。
+	sc.Buffer(make([]byte, 64*1024), 1024*1024)
+
+	var para []string
+	flush := func() error {
+		if len(para) == 0 {
+			return nil
+		}
+		text := strings.Join(para, " ")
+		para = nil
+		if err := sink(text); err != nil {
+			return err
+		}
+	}
+
+	for sc.Scan() {
+		line := strings.TrimSpace(sc.Text())
+		if line == "" {
+			// 空行作为段落边界，冲刷当前段落。
+			if err := flush(); err != nil {
+				return err
+			}
+			continue
+		}
+		para = append(para, line)
+	}
+	if err := sc.Err(); err != nil {
+		return err
+	}
+	return flush()
+}
