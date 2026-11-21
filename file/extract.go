@@ -446,6 +446,7 @@ func readTxtStreamRecursive(path string, sink ChunkSink) error {
 		if err := sink(text); err != nil {
 			return err
 		}
+		return nil
 	}
 
 	for sc.Scan() {
